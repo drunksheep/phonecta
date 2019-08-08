@@ -1,313 +1,250 @@
 @import 'reset'
 @import 'variables'
 
-
-body 
-	min-height 100vh
 	
+// ## Cores ## // 
 
-.cta-overlay 
-	display none
-	position absolute
-	top 0 
-	left 0
-	height 100%
-	width 100%
-	background-color rgba(#e1e1e1, .8)
+// CTA 
+
+// Fundo do "Balão"
+$tooltipBackgroundColor = #FFF
+
+// Sombra do Balão
+$tooltipShadow = 0 0 10px 0 rgba(#000, .2)
+
+// Título 
+$ctaTitleColor = green 
+
+// Texto chamada "Balão"
+$ctaTextColor = #e1e1e1
+
+// Botão de Confirmação 
+$confirmButtonBackground = green
+$confirmButtonColor = #FFF
+$confirmButtonHoverBackground = darken(green, 10)
+$confirmButtonHoverColor = #FFF
+$confirmButtonBorderColor = green
+$confirmButtonHoverBorderColor = darken(green, 10)
+
+// Botão de "esconder" o CTA
+$hideCtaBackground = #FFF
+$hideCtaColor = green
+$hideCtaBorderColor = lighten(green, 20)
+
+// Fundo do botao / ícone de telefone
+$phoneIconBackground = green
+$phoneIconBackgroundWave = rgba(green .3)
+$phoneIconColor = #FFF
+
+// Overlay e Corpo do Form
+
+// Overlay
+$overlayBackground = rgba(#e1e1e1, .9)
+
+// Botão de Fechar o Overlay
+$closeButtonColor = #FFF
+
+// Corpo do Formulário
+$formWrapperBackground = #FFF
+$formWrapperBackgroundShadow = 0 0 10px 0 rgba(#000, .2)
+
+// Ícones / Botões 
+$icons = green
+$iconsActive = darken(green, 10)
+$switchButtonsBackground = #58595b
+$switchButtonsBackgroundActive = darken(#58595b, 10)
+$switchButtonsColor = #FFF
+$switchButtonsColorActive = #FFF
+
+// Campos 
+$fieldBorderColor = #000
+$fieldBackgroundColor = #FFF
+
+// Botão de Envio
+$submitButtonBorderColor = #000
+$submitButtonBorderColorHover = #000
+$submitButtonBackgroundColor = green 
+$submitButtonBackgroundColorHover = green 
+$submitButtonColor = #FFF
+$submitButtonColorHover = #FFF
+
+// "Bolinha" de número de "ligadores"
+$callerNumberBackground = red
+
+// Texto das chamadas dentro do form 
+$innerFormTextColor = #58595b
+
+// ## Tamanhos, border-radius, Margens ## // 
+
+// Tamanho máximo da Caixa dos Forms 
+$formWrapperMaxWidth = 500px
+
+// Tamanho do Título do "Balão"
+$ctaTitleSize = 20px
+
+// Tamanho da chamadinha do "Balão"
+$ctaTextSize = 12px
+
+// Bordas no botão de esconder o CTA 
+$hideCtaBorderWidth = 1px
+
+// Tamanho das Fontes internas das chamadas 
+$innerFormTextSize = 16px
+
+// Altura dos Campos, Largura das Bordas
+$fieldHeight = 42px
+$fieldBorderWidth = 2px
+
+// Altura do Botão de Enviar, Largura da borda
+$confirmButtonHeight = 30px
+$confirmButtonBorderWidth = 2px
+
+// Border radius (será aplicado nos campos, no wrapper e no botão de enviar)
+$borderRadius = 0
+
+
+/** 
+#############################################################
+#############################################################
+### EM 99% DOS CASOS, VOCÊ NÃO PRECISA EDITAR NADA ABAIXO ###	 
+#############################################################
+#############################################################
+**/
+
+// Wrapper geral do CTA
+.cta-open-wrapper 
+	position fixed
+	bottom 30px 
+	right 15px
 	z-index 10
+	text-align center
 	
+	// @media $tablet-max
+	// 	display noness
+	
+	@media $small-desktop-minmax
+		bottom 15px
+	
+// Balão
+.cta-tooltip
+	width 130px
+	padding 22px 14px 19px 14px
+	position relative
+	background-color $tooltipBackgroundColor
+	box-shadow $tooltipShadow
+	margin-bottom 25px
+
+	&:after
+		content ''
+		display block
+		top 100% 
+		left 50%
+		border solid transparent
+		height 0 
+		width 0
+		position absolute
+		border-color transparent 
+		border-top-color $tooltipBackgroundColor
+		border-width 10px
+		margin-left -10px
+
+// Textos do Balão
+.cta-main-title
+	color $ctaTitleColor
+	font-size $ctaTitleSize
+	margin-bottom 10px
+
+.cta-main-text
+	color $ctaTextColor
+	font-size $ctaTextSize
+	margin-bottom 15px
+
+// Botão do Balão
+.cta-open
+	color $ctaButtonColor
+	background-color $ctaButtonBackground
+
+	&:hover
+		background-color $ctaButtonHoverBackground
+		color $ctaButtonHoverColor
+
+// Ícone de Telefone
+
+.phone-icon
+	background-color $phoneIconBackground
+	box-shadow 0 0 0 7px $phoneIconBackgroundWave
+	font-size 20px
+	width 45px 
+	height 45px
+	border-radius 50%
+	margin-left auto 
+	margin-right auto 
+	border 0
+	position relative
+
+	i, img
+		color $phoneIconColor
+		position absolute
+		left 0 
+		right 0 
+		margin auto 
+		top 50%
+		transform translateY(-50%)
+	
+	&:after
+		content attr(data-notifications)
+		padding 3px 6px 
+		font-size 12px 
+		color #FFF
+		background-color red
+		border-radius 50%
+		position absolute
+		top -6px 
+		right -6px
+	
+// Botão de esconder "Balão"
+.cta-hide-tooltip
+	position absolute
+	top -8px 
+	right -8px 
+	border-radius 50%
+	font-size 16px
+	border $hideCtaBorderWidth solid $hideCtaBorderColor
+	background-color $hideCtaBackground
+	color $hideCtaColor
+
+// Botão de Confirmação (abrir o CTA)
+.cta-open
+	width 100%
+	height $confirmButtonHeight
+	border $confirmButtonBorderWidth solid $confirmButtonBorderColor
+	color $confirmButtonColor
+	background-color $confirmButtonBackground
+	transition all .3s ease-in-out
+
+	&:hover
+		background-color $confirmButtonHoverBackground
+		color $confirmButtonHoverColor
+		border-color $confirmButtonHoverBorderColor
+
+// Overlay 
+.cta-overlay
+	background-color $overlayBackground
+	position fixed 
+	top 0 
+	left 0 
+	width 100% 
+	height 100%
+	z-index 11
+
 .form-wrapper-all
-	min-height: 460px
-	padding-bottom 60px
-	background-color: #FFF
-	border-radius 4px
-	font-size 0
 	position absolute
 	left 0 
 	right 0 
 	margin auto 
-	top 50% 
+	top 50%
 	transform translateY(-50%)
-	box-shadow  0 0 20px 0 rgba(#000, .1)
-	display none
-
-	@media $tablet-max
-		width 100%
-		
-	@media $small-desktop-min
-		width: 520px
-
-	.instance
-		display block
-		
-		&:not(.active)
-			display none
-	
-.form-pickers
-	background-color: #f1f2f2
-	color #58595b
-	font-size 11px
-	height: 47px
-	border 0
-	display inline-block
-	vertical-align top
-	width: 32.666%
-	font-weight: 700
-	transition all .35s ease-in-out
-	
-	& + .form-pickers
-		margin-left: 0.6667%
-		
-	i
-		color $green
-		font-size 16px
-		margin-right: 5px
-		
-		&.alt 
-			font-weight: 300
-
-	&.active, &:hover
-		background-color $green
-		color #FFF
-
-		i 
-			color $blue
-		
-.leave-message
-	text-align center
-	
-	.fields
-		max-width 300px 
-		margin auto
-		
-		.half 
-			@media $small-desktop-min
-				width: 47.5%
-				float left
-			
-			& + .half 
-				@media $small-desktop-min
-					margin-left: 5%
-					
-		.full 
-			clear both 
-			
-	.field-wrapper
-		width: 100%
-		display block
-		margin-bottom: 10px
-		position relative
-		
-		.icon 
-			position absolute
-			left 2px 
-			height: 36px
-			background-color: #FFF
-			top 1px 
-			bottom 1px
-			width: 36px 
-			text-align center
-			
-			i 
-				color $green 
-				font-size 16px
-				line-height 34px
-
-.field-green
-	height: 38px
-	border 1px solid $green 
-	border-radius 4px
-	width: 100%
-	padding 5px 10px
-	
-	&.bigger
-		height: 75px
-		
-	&.has-icon 
-		padding-left: 40px
-
-.leave-title
-	font-size 20px
-	color $gray 
-	font-weight: 700
-	line-height: 24px
-	padding-top: 40px
-	margin-bottom: 20px
-	max-width 360px
-	display block
-	margin-left: auto  
-	margin-right: auto
-	width: 100%
-	border-bottom 0
-	
-	.variant 
-		font-size 30px
-		display block
-		margin-bottom: 10px
-	
-.callers
-	font-size 14px 
-	color $gray
-	margin-top: 18px 
-	
-	.number 
-		padding 3px 8px 
-		border-radius 50% 
-		color #FFF
-		background-color: red
-
-.call-me-later
-	width: 300px
-	height 42px
-	background-color: $green 
-	color #FFF 
-	font-size 20px 
-	font-weight: 500
-	border 2px solid transparent 
-	border-radius 4px
-	transition all .35s ease
-	
-	&:hover
-		color $green 
-		border-color $green 
-		background-color: #FFF
-		
-.confirm
-	width: 78px
-	display block
-	margin-left: auto 
-	margin-right: auto 
-	height: 30px 
-	background-color: $green 
-	font-size 16px
-	color #FFF
-	border 2px solid transparent 
-	border-radius 4px 
-	transition .2s ease
-	
-	&:hover 
-		background-color: #FFF
-		color $green 
-		border-color $green
-
-.close-modal
-	top 0
-	right 10px
-	position absolute 
-	background transparent 
-	color #FFF 
-	padding 0 
-	border 0
-	font-size 42px
-
-.call-cta-wrapper
-	position fixed
-	right 15px
-	bottom 30px 
-	z-index 10
-	text-align center
-	
-	@media $tablet-max
-		display none
-
-	@media $small-desktop-minmax
-		right 15px
-		bottom 15px
-		
-.cta-tooltip
-	width: 130px
-	padding 0 14px
-	padding-top: 22px
-	padding-bottom: 19px
-	position relative
-	background-color: #fafafa
-	text-align center
-	border-radius 4px
-	box-shadow 0 0 10px 0 rgba(#000, .25)
-	opacity 1
-	transform translateY(0px)
-	transition all .35s ease-in-out
-
-
-	@media $small-desktop-minmax
-		width 130px
-		padding 10px 14px
-	
-	&:after
-		top: 100%
-		left: 50%
-		border: solid transparent
-		content: ""
-		height: 0
-		width: 0
-		position: absolute
-		pointer-events: none
-		border-color: rgba(255, 255, 255, 0)
-		border-top-color: #fafafa
-		border-width: 10px
-		margin-left: -10px
-		
-	&.clicked
-		transform translateY(-20px)
-		opacity 0
-		
-.tooltip-text
-	font-size 14px 
-	color $gray 
-	margin-bottom: 11px
-	
-	.variant 
-		font-size 20px 
-		font-weight: 700
-		display block
-		margin-bottom: 5px
-		
-.call-cta
-	margin-top: 30px
-
-	@media $small-desktop-minmax
-		max-width 50px
-		margin-top 15px
-		
-.phone-icon 
-	@media $small-desktop-min
-		position relative
-		height 45px
-		width 45px 
-		background-color $green
-		box-shadow 0 0 0 7px rgba($green, .4)
-		border-radius 50%
-		font-size 20px
-		color #FFF
-		display block
-		margin-left auto 
-		margin-right auto 
-		margin-top 20px
-		border 0
-		
-	i 
-		absoluteCenter()
-	
-	&:after
-		content '1'
-		padding 3px 6px 
-		font-size 12px
-		color #FFF
-		border-radius 50% 
-		background-color red
-		position absolute
-		top -6px 
-		right -6px
-		
-.close-cta
-	position absolute
-	width 25px
-	height 25px 
-	border-radius 50% 
-	border 1.5px solid rgba(#000, .2)
-	padding 0
-	text-align center
-	background-color #f3f3f3
-	top -12.5px
-	right -12.5px
-	font-size 20px
+	width 100%
+	max-width $formWrapperMaxWidth
+	background-color $formWrapperBackground
+	box-shaddow $formWrapperBackgroundShadow

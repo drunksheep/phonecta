@@ -1,27 +1,28 @@
 {
-  "name": "phone-cta",
-  "version": "1.5.0",
-  "description": "Ready to use phone cta for web projects",
+  "name": "CTA_de_Telefone",
+  "version": "2.0.0",
+  "description": "CTA de telfone pronto para usar",
   "author": "André Facchini",
   "person": {
     "name": "André Facchini",
     "email": "andre3facchini@gmail.com",
     "url": "https://twitter.com/@dokkodojs"
   },
-  "repository": "github:drunksheep/personal-boilerplate",
+  "repository": "github:drunksheep/phonecta",
   "license": "MIT",
-  "homepage": "https://github.com/drunksheep/personal-boilerplate/tree/wordpress",
-  "dependencies": {
+  "homepage": "https://github.com/drunksheep/phonecta/",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
     "autoprefixer": "*",
     "css-mqpacker": "*",
     "cssnano": "*",
     "gulp": "^4.0.0",
-    "gulp-concat": "*",
-    "gulp-eslint": "*",
+    "gulp-babel": "^8.0.0",
+    "gulp-concat": "^2.6.1",
     "gulp-postcss": "*",
     "gulp-sourcemaps": "*",
     "gulp-stylus": "*",
-    "gulp-uglify": "*",
-    "pump": "*"
+    "gulp-terser": "^1.2.0"
   }
 }

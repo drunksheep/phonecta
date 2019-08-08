@@ -1,58 +1,58 @@
 // npm uninstall `ls -1 node_modules | tr '/\n' ' '`
 
-var gulp = require('gulp'),
+const gulp = require('gulp'),
     stylus = require('gulp-stylus'),
-    concat = require('gulp-concat'),
-    uglify = require('gulp-uglify'),
     postcss = require('gulp-postcss'),
     sourcemaps = require('gulp-sourcemaps'),
     packer = require('css-mqpacker'),
     prefixes = require('autoprefixer'),
     cssnano = require('cssnano'),
-    pump = require('pump');
+    concat = require('gulp-concat'),
+    babel = require('gulp-babel'),
+    terser = require('gulp-terser');
 
-gulp.task('stylus', function () {
+const config = {
+    js: {
+        src: 'src/js/*.js',
+    },
+    css: {
+        src: 'src/stylus/main.styl',
+        watch: 'src/stylus/**/*.styl',
+    },
+    dist: 'dist',
+    postCSSModules: [
+        prefixes(),
+        packer(),
+        cssnano({
+            zindex: false,
+            reduceIdents: false
+        }),
+    ]
+};
+
+gulp.task('js', () => {
+    return gulp.src(config.js.src)
+        .pipe(sourcemaps.init())
+        .pipe(babel())
+        .pipe(concat('app.js'))
+        .pipe(terser())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(config.dist))
+});
+
+gulp.task('css', () => {
     return gulp.src('src/stylus/main.styl')
         .pipe(stylus())
-        .pipe(gulp.dest('src'));
-});
-
-gulp.task('css', function () {
-    var processors = [
-        prefixes({
-            browsers: ['last 3 versions']
-        }),
-        packer(),
-        cssnano({zindex: false,reduceIdents: false}),
-    ];
-    return gulp.src('src/*.css')
         .pipe(sourcemaps.init())
-        .pipe(postcss(processors))
+        .pipe(postcss(config.postCSSModules))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(config.dist));
 });
 
-gulp.task('compress', function (done) {
-    gulp.src(['src/js/phone.js'])
-        .pipe(concat('phone.min.js'))
-        .pipe(uglify())
-        .pipe(gulp.dest('dist'));
-    done();
+gulp.task('watch', (done) => {
+    gulp.watch(config.css.watch, gulp.series('css'));
+    gulp.watch(config.js.src, gulp.series('js'));
+    done;
 });
 
-gulp.task('uglify-debug', function (cb) {
-    pump([
-        gulp.src('src/js/phone.js'),
-        concat('phone.min.js'),
-        uglify(),
-        gulp.dest('dist')
-    ], cb);
-});
-
-gulp.task('watch', function (done) {
-    gulp.watch('src/stylus/main.styl', gulp.series('stylus', 'css'));
-    gulp.watch('src/js/**/phone.js', gulp.series('compress'));
-    done();
-});
-
-gulp.task('default', gulp.series('stylus', 'css', 'compress', 'watch'));
+gulp.task('default', gulp.series('js', 'css', 'watch' ));
